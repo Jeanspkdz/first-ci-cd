@@ -9,7 +9,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: First Step
-        run: echo 'Hello GithubActions'
+        run: echo 'Hello GithubAction'
       
       - name: Ver Date
         run : date
+      
+      - name: Ver Archivos Dispoibles
+        run: ls -la
