@@ -1,0 +1,15 @@
+name: First Workflow
+
+on: 
+  push: 
+    branches: [main]
+
+jobs:
+  hello: 
+    runs-on: ubuntu-24.04
+    steps:
+      - name: First Step
+        run: echo 'Hello GithubActions'
+      
+      - name: Ver Date
+        run : date
