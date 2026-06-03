@@ -1,15 +1,27 @@
 name: First Workflow
+run-name: ${{github.actor}} is learning GITHUB ACTIONS for CI/CD
 
 on: 
   push: 
     branches: [main]
 
 jobs:
+  
+  check-bats-version:
+    runs-on: ubuntu-24.04
+    steps: 
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm i -g bats
+      - run: bats -v
+
   hello: 
     runs-on: ubuntu-24.04
     steps:
       - name: First Step
-        run: echo 'Hello GithubAction'
+        run: echo 'Hello GithubAction ${{ github.event_name }}'
       
       - name: Ver Date
         run : date
