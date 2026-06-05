@@ -3,6 +3,16 @@ run-name: Run by ${{github.actor}}
 on:
   workflow_dispatch: 
     inputs:
+      logLevel:
+        default: 'info'
+        description: Select the log level
+        type: choice
+        options:
+          - info
+          - debug
+          - error
+
+
       customName: 
         default: 'John'
         required: false
@@ -19,6 +29,8 @@ jobs:
     # if: github.event.inputs.showName == 'true'
     if: inputs.showName
     runs-on: ubuntu-24.04
+    env:
+      LOG_LEVEL: ${{inputs.logLevel}}
     steps:
       - name: 'Show custom name input'
         env:
@@ -27,4 +39,5 @@ jobs:
         run: | 
           echo "Your custom input is $CUSTOM_NAME"
           echo "Show Name is $SHOW_NAME"
+          echo "Show Name is ${LOG_LEVEL}_SCOPE"
         
