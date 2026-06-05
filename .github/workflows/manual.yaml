@@ -25,6 +25,6 @@ jobs:
           SHOW_NAME: ${{inputs.showName}}
           CUSTOM_NAME: ${{inputs.customName}}
         run: | 
-          echo 'Your custom input is $CUSTOM_NAME'
-          echo 'Show Name is $SHOW_NAME'
+          echo "Your custom input is $CUSTOM_NAME"
+          echo "Show Name is $SHOW_NAME"
         
