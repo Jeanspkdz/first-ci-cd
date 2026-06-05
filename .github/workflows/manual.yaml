@@ -1,0 +1,30 @@
+name: 'Manual Workflow'
+run-name: Run by ${{github.actor}}
+on:
+  workflow_dispatch: 
+    inputs:
+      customName: 
+        default: 'John'
+        required: false
+        type: string
+        description: 'Pick a custonName to dispaly later'
+      
+      showName:
+        default: false
+        required: true
+        type: boolean
+        description: 'Show Name'
+jobs:
+  show_name:
+    # if: github.event.inputs.showName == 'true'
+    if: inputs.showName
+    runs-on: ubuntu-24.04
+    steps:
+      - name: 'Show custom name input'
+        env:
+          SHOW_NAME: ${{inputs.showName}}
+          CUSTOM_NAME: ${{inputs.customName}}
+        run: | 
+          echo 'Your custom input is $CUSTOM_NAME'
+          echo 'Show Name is $SHOW_NAME'
+        

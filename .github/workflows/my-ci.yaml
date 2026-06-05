@@ -1,9 +1,25 @@
 name: First Workflow
 run-name: ${{github.actor}} is learning GITHUB ACTIONS for CI/CD
 
-on: 
+# on: [push, fork]
+on : 
   push: 
-    branches: [main]
+    branches: 
+      - main
+      - 'releases/**'
+      - '!test'
+    tags: 
+      [v2, v1.*]
+    paths-ignore:
+      - 'README.md'
+    
+  label: 
+    types: 
+      - created
+
+# on: 
+#   push: 
+#     branches: [main]
 
 jobs:
   
