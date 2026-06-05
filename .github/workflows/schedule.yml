@@ -1,0 +1,14 @@
+name: Schedule Workflow
+on:
+  schedule:
+    - cron: 30 */7 * * 0,3,5
+
+jobs:
+  send_report:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - name: Report 1
+        run: echo "Sending report..."
+    
+
+  
