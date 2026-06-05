@@ -3,6 +3,10 @@ run-name: Run by ${{github.actor}}
 on:
   workflow_dispatch: 
     inputs:
+      environment:
+        type: environment
+        description: Environtment
+
       logLevel:
         default: 'info'
         description: Select the log level
