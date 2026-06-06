@@ -1,7 +1,8 @@
 name: Schedule Workflow
 on:
   schedule:
-    - cron: 30 */7 * * 0,3,5
+    - cron: 30 7 * * 0,3,5
+    # - cron: 30 */7 * * 0,3,5
 
 jobs:
   send_report:
