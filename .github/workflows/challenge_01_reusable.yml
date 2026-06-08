@@ -6,6 +6,10 @@ on:
         type: string
         description: What app was changed (api | web)
         required: true
+    secrets:
+      my_secret:
+        required: true
+        description: Special Secret
     outputs:
       build_message:
         description: Build Result Message
@@ -16,6 +20,8 @@ jobs:
   build_app:
     if: ${{inputs.app-name == 'api' || inputs.app-name == 'web'}}
     runs-on: ubuntu-24.04-arm
+    env:
+      MY_SECRET: ${{secrets.my_secret}}
     outputs:
       message: ${{steps.bs.outputs.message}}
     steps:
@@ -35,6 +41,13 @@ jobs:
         name: Build Success
         env:
           APP_NAME: ${{inputs.app-name}}
-        run: echo "message=${APP_NAME}_BUILD_SUCESS" >> $GITHUB_OUTPUT
+        run: |
+           if [ -n "$MY_SECRET" ]; then
+              echo "Secret was provided $MY_SECRET"
+            else
+              echo "Secret is missing"
+              exit 1
+           fi
+           echo "message=${APP_NAME}_BUILD_SUCESS" >> $GITHUB_OUTPUT
       
   

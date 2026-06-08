@@ -2,11 +2,33 @@ name: 'Challenge 01'
 description: 'When a PR is opened, the pipeline detects which apps were modified and only builds those, reporting the results as a PR comment.'
 on:
   pull_request: 
+    types: [opened,synchronize]
     branches:
-      - main
+      - challenge_01
+
 
 jobs:
   run_build_on_app:
-    runs-on: ubuntu-24.04-arm
+    uses: ./.github/workflows/challenge_01_reusable.yml
+    with:
+      app-name : web
+    secrets: 
+      my_secret: ${{secrets.MY_SECRET}}
+
+    
+  send_report:
+    runs-on: ubuntu-22.04-arm
+    needs: run_build_on_app
     steps:
-      - uses: ./.github/workflows/challenge_01_reusable.yml
+      - name: Send Build Report
+        run: |
+          if [ "${{ needs.run_build_on_app.outputs.build_message }}" = "API_BUILD_SUCCESS" ]; then
+            echo "New API version released"
+
+          elif [ "${{ needs.run_build_on_app.outputs.build_message }}" = "WEB_BUILD_SUCCESS" ]; then
+            echo "New web version available"
+
+          else
+            echo "Unknown build result"
+          fi
+        
