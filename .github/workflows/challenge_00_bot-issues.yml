@@ -1,0 +1,21 @@
+name: Bot Issues
+on: 
+  issues: 
+    types: [closed,assigned,opened, reopened]
+  issue_comment: 
+    types: [created]
+jobs:
+
+  create_comment:
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      issues: write
+    steps:
+      - name: Leave Comment
+        if: github.event_name == 'issues' && github.event.action == 'opened'
+        env: 
+          GITHUB_TOKEN: ${{github.token}}
+          GH_REPO: ${{ github.repository }}
+        run: gh issue comment ${{github.event.issue.number}} --body "Thanks for opening this issue! --repo ${{github.repository}}"
+          
+    
