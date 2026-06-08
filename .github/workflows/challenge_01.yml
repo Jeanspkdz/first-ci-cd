@@ -1,4 +1,5 @@
 name: 'Challenge 01'
+run-name: PR by ${{github.event.pull_request.user.login}} from ${{github.event.pull_request.head.ref}} into ${{github.event.pull_request.base.ref}} 
 description: 'When a PR is opened, the pipeline detects which apps were modified and only builds those, reporting the results as a PR comment.'
 on:
   pull_request: 
