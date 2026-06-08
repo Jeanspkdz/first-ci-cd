@@ -1,0 +1,40 @@
+name: 'Build APP'
+on:
+  workflow_call: 
+    inputs:
+      app-name:
+        type: string
+        description: What app was changed (api | web)
+        required: true
+    outputs:
+      build_message:
+        description: Build Result Message
+        value: ${{ jobs.build_app.outputs.message }}
+    
+  
+jobs:
+  build_app:
+    if: ${{inputs.app-name == 'api' || inputs.app-name == 'web'}}
+    runs-on: ubuntu-24.04-arm
+    outputs:
+      message: ${{steps.bs.outputs.message}}
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v6
+      - name: Install PNPM
+        uses: pnpm/action-setup@v6
+        with:
+          version: 11
+          run_install: false
+      - name: Install and Build
+        working-directory: apps/${{inputs.app-name}}
+        run: |
+          pnpm ci
+          pnpm build
+      - id: bs
+        name: Build Success
+        env:
+          APP_NAME: ${{inputs.app-name}}
+        run: echo "message=${APP_NAME}_BUILD_SUCESS" >> $GITHUB_OUTPUT
+      
+  

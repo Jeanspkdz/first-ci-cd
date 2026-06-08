@@ -1,0 +1,12 @@
+name: 'Challenge 01'
+description: 'When a PR is opened, the pipeline detects which apps were modified and only builds those, reporting the results as a PR comment.'
+on:
+  pull_request: 
+    branches:
+      - main
+
+jobs:
+  run_build_on_app:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: ./.github/workflows/challenge_01_reusable.yml
