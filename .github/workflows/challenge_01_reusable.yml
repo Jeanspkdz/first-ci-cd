@@ -48,6 +48,6 @@ jobs:
               echo "Secret is missing"
               exit 1
            fi
-           echo "message=${APP_NAME}_BUILD_SUCESS" >> $GITHUB_OUTPUT
+           echo "message=${APP_NAME}_BUILD_SUCCESS" >> $GITHUB_OUTPUT
       
   
